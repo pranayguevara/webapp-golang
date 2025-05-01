@@ -47,16 +47,10 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/webapp-golang:${{ github.run_id }}
-
-  release:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Update Helm Chart Values
-      uses: Nextdoor/helm-set-image-tag-action@main
-      with:
-        values_files: go-web-app-helm/values.yaml
-        tag_keys: .image.tag
-        tag_value: ${{ github.run_id }}
+      
+      - name: Update Helm Chart Values
+        uses: Nextdoor/helm-set-image-tag-action@main
+        with:
+          values_files: go-web-app-helm/values.yaml
+          tag_keys: .image.tag
+          tag_value: ${{ github.run_id }}
