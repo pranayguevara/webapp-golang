@@ -48,23 +48,25 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/webapp-golang:${{ github.run_id }}
       
-      - name: Update Helm Chart Values
-        uses: Nextdoor/helm-set-image-tag-action@main
-        with:
-          values_files: go-web-app-helm/values.yaml
-          tag_keys: .image.tag
-          tag_value: ${{ github.run_id }}
+  update-newtag-in-helm-chart:
+    runs-on: ubuntu-latest
 
-      - name: Commit files
-        run: |
-          git config --local user.email "pranaybablu024@gmail.com"
-          git config --local user.name "pranayguevara8610"
-          git commit -a -m "Add changes"
-      
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.PAT_TOKEN }}
-          repository: pranayguevara/webapp-golang
-          force: true
-          tags: true
+    needs: push
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.TOKEN }}
+
+    - name: Update tag in Helm chart
+      run: |
+        sed -i 's/tag: .*/tag: "${{github.run_id}}"/' helm/go-web-app-helm/values.yaml
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "pranaybablu024@gmail.com"
+        git config --global user.name "pranayguevara8610"
+        git add helm/go-web-app-helm/values.yaml
+        git commit -m "Update tag in Helm chart"
+        git push
