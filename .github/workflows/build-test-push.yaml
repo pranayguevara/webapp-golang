@@ -64,5 +64,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
+          github_token: ${{ secrets.PAT_TOKEN }}
+          repository: pranayguevara/webapp-golang
           force: true
           tags: true
