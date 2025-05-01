@@ -1,4 +1,4 @@
-#github workflow file for building artifact, testing the code and pushing the image to hub
+#github workflow file for testing the code and pushing the image to hub
 name: build-test-push
 
 on:
