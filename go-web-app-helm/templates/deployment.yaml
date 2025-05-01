@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gowebapp-deployment
+  labels:
+    app: gowebapp-dep
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: gowebapp-pod
+  template:
+    metadata:
+      labels:
+        app: gowebapp-pod
+    spec:
+      containers:
+      - name: go-web-app
+        image: pranaybablu024/webapp-golang:{{ .Values.image.tag }}
+        ports:
+        - containerPort: 8080
