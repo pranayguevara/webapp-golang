@@ -54,3 +54,15 @@ jobs:
           values_files: go-web-app-helm/values.yaml
           tag_keys: .image.tag
           tag_value: ${{ github.run_id }}
+
+      - name: Commit files
+        run: |
+          git config --local user.email "pranaybablu024@gmail.com"
+          git config --local user.name "pranayguevara8610"
+          git commit -a -m "Add changes"
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          force: true
+          tags: true
