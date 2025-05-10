@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gowebapp-deployment
+  namespace: golang-webapp
   labels:
     app: gowebapp-dep
 spec:
@@ -11,6 +12,7 @@ spec:
       app: gowebapp-pod
   template:
     metadata:
+      namespace: golang-webapp
       labels:
         app: gowebapp-pod
     spec:
