@@ -1,6 +1,10 @@
 pipeline{
     agent any
 
+    parameters{
+        string(name:'ENVIRONMENT', defaultValue:'dev', description:'Target environment')
+    }
+
     stages{
         stage("checkout"){
             steps{
@@ -10,13 +14,13 @@ pipeline{
 
         stage('Build'){
             steps{
-                sh 'echo "Building the app"'
+                sh 'echo "Building the app for ${params.ENVIRONMENT} environment"'
             }
         }
 
         stage("Test"){
             steps{
-                sh 'echo "Testing the app"'
+                sh 'echo "Testing the app for ${params.ENVIRONMENT}"'
             }
         }
     }
