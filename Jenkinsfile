@@ -1,26 +1,22 @@
-pipeline{
+pipeline {
     agent any
 
-    parameters{
-        string(name:'ENVIRONMENT', defaultValue:'dev', description:'Target environment')
-    }
-
-    stages{
-        stage("checkout"){
-            steps{
-                git branch: 'master', url: 'https://github.com/pranayguevara/webapp-golang.git'
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "Checking out code..."
             }
         }
-
-        stage('Build'){
-            steps{
-                sh 'echo "Building the app for ${params.ENVIRONMENT} environment"'
+        stage('Build') {
+            steps {
+                echo "Building for environment: ${env.BRANCH_NAME}"
+                // build steps here
             }
         }
-
-        stage("Test"){
-            steps{
-                sh 'echo "Testing the app for ${params.ENVIRONMENT}"'
+        stage('Deploy') {
+            steps {
+                echo "Deploying to ${env.BRANCH_NAME} environment"
+                // deployment steps here
             }
         }
     }
